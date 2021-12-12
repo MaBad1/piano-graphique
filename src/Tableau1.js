@@ -2,35 +2,63 @@
 class Tableau1 extends Phaser.Scene{
 
     preload(){
-        /**Chargement du Background*/
+        /**Chargement des Backgrounds*/
         this.load.image('bg', 'assets/bg.jpg');
+        this.load.image('bgb', 'assets/bgbrume.png');
+        this.load.image('bgp', 'assets/bgpluie.png');
+        this.load.image('bgn', 'assets/bgneige.png');
+
+        /**Chargement de la brume*/
+        this.load.image('brume', 'assets/brume.png');
+
+        /**Boucle de chargement de la pluie*/
+        for(let q=1;q<=3;q++){
+            this.load.image('rain'+q, 'assets/rain/frame'+q+'.png');
+        }
+
+        /**Boucle de chargement de la neige*/
+        for(let q=1;q<=5;q++){
+            this.load.image('snow'+q, 'assets/snow/frame-'+q+'.png');
+        }
 
         /**Boucle de chargement des champignons*/
-        for(let q=2;q<=5;q++){
-            this.load.image('mush'+q, 'assets/mush/mush'+q+'.jpg');
+        for(let q=1;q<=5;q++){
+            this.load.image('mush'+q, 'assets/mush/mush'+q+'.png');
         }
-        this.load.image('mush1', 'assets/mush/mush1.png');
 
         /**Boucle de chargement des fleurs*/
-        for(let q=1;q<=4;q++){
-            this.load.image('fleur'+q, 'assets/fleurs/fleur'+q+'.jpg');
+        for(let q=1;q<=5;q++){
+            this.load.image('fleur'+q, 'assets/fleurs/fleur'+q+'.png');
         }
-        this.load.image('fleur5', 'assets/fleurs/fleur5.png');
 
         /**Boucle de chargement des papillons*/
-        this.load.image('butt1', 'assets/paps/butt1.jpg');
-        for(let q=2;q<=4;q++){
+        for(let q=1;q<=4;q++){
             this.load.image('butt'+q, 'assets/paps/butt'+q+'.png');
         }
 
+
+        /**Chargement des particules*/
         this.load.image('part', 'assets/yellow.png');
 
     }
 
     create(){
-        /**Affichage du background*/
-        let background=this.add.image(0,0, 'bg').setOrigin(0,0);
-        background.scale=0.7;
+        /**Crééation des backgrounds*/
+        this.background=this.add.sprite(0,0, 'bg').setOrigin(0,0);
+        this.background.scale=0.7;
+        this.background.setVisible(true);
+
+        this.backbrume=this.add.sprite(0,0, 'bgb').setOrigin(0,0);
+        this.backbrume.scale=0.7;
+        this.backbrume.setVisible(false);
+
+        this.backneige=this.add.sprite(0,0, 'bgn').setOrigin(0,0);
+        this.backneige.scale=0.7;
+        this.backneige.setVisible(false);
+
+        this.backpluie=this.add.sprite(0,0, 'bgp').setOrigin(0,0);
+        this.backpluie.scale=0.7;
+        this.backpluie.setVisible(false);
 
         /**Création des sprites de champignons en les rendant invisibles*/
         this.mush1=this.add.sprite(800,500, 'mush1').setOrigin(0,0);
@@ -56,7 +84,7 @@ class Tableau1 extends Phaser.Scene{
         /**Création des sprites des fleurs en les laissant affichées*/
         this.fleur1=this.add.sprite(970,530, 'fleur1').setOrigin(0,0);
         this.fleur1.setVisible(true);
-        this.fleur1.scale=0.1;
+        this.fleur1.scale=0.07;
 
         this.fleur2=this.add.sprite(600,600, 'fleur2').setOrigin(0,0);
         this.fleur2.setVisible(true);
@@ -64,15 +92,15 @@ class Tableau1 extends Phaser.Scene{
 
         this.fleur3=this.add.sprite(850, 650, 'fleur3').setOrigin(0,0);
         this.fleur3.setVisible(true);
-        this.fleur3.scale=0.1;
+        this.fleur3.scale=0.15;
 
         this.fleur4=this.add.sprite(800,560, 'fleur4').setOrigin(0,0);
         this.fleur4.setVisible(true);
-        this.fleur4.scale=0.1;
+        this.fleur4.scale=0.15;
 
         this.fleur5=this.add.sprite(680,450, 'fleur5').setOrigin(0,0);
         this.fleur5.setVisible(true);
-        this.fleur5.scale=0.1;
+        this.fleur5.scale=0.07;
 
         /**Création des sprites des papillons en les rendant invisibles*/
         this.butt1=this.add.sprite(550,430, 'butt1').setOrigin(0,0);
@@ -91,6 +119,46 @@ class Tableau1 extends Phaser.Scene{
         this.butt4=this.add.sprite(1200,100, 'butt4').setOrigin(0,0);
         this.butt4.setVisible(false);
         this.butt4.scale=0.2;
+
+        /**Création du sprite de brume*/
+        this.brume=this.add.sprite(0,50, 'brume').setOrigin(0,0);
+        this.brume.setVisible(false);
+        this.brume.scale=0.7;
+
+        /**Création de l'animation de pluie*/
+        this.rainAnim = this.add.sprite(0, 0, 'rain1').setOrigin(0,0);
+        this.anims.create({
+            key: 'rain',
+            frames: [
+                {key:'rain1'},
+                {key:'rain2'},
+                {key:'rain3'},
+            ],
+            frameRate: 13,
+            repeat: -1
+        });
+        this.rainAnim.play('rain');
+        this.rainAnim.scale=1.4;
+        this.rainAnim.setVisible(false);
+
+        /**Création de l'animation de neige*/
+        this.snowAnim = this.add.sprite(0, 0, 'snow1').setOrigin(0,0);
+        this.anims.create({
+            key: 'snow',
+            frames: [
+                {key:'snow1'},
+                {key:'snow2'},
+                {key:'snow3'},
+                {key:'snow4'},
+                {key:'snow5'},
+            ],
+            frameRate: 13,
+            repeat: -1
+        });
+        this.snowAnim.play('snow');
+        this.snowAnim.scale=1.4;
+        this.snowAnim.setVisible(false);
+
 
         /**Création des particules*/
         this.part = this.add.particles('part');
@@ -199,6 +267,52 @@ class Tableau1 extends Phaser.Scene{
                     }
                     else  {
                         me.fleur5.setVisible(true)
+                    }
+                    break;
+
+                /**Inputs pour le changement de mood (Q-F)*/
+                case Phaser.Input.Keyboard.KeyCodes.Q: /**Inputs pour le beau temps*/
+                    if (me.background.visible == false) {
+                        me.background.setVisible(true);
+                        me.backbrume.setVisible(false);
+                        me.backneige.setVisible(false);
+                        me.backpluie.setVisible(false);
+                        me.brume.setVisible(false);
+                        me.snowAnim.setVisible(false);
+                        me.rainAnim.setVisible(false);
+                    }
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.S: /**Inputs pour la pluie*/
+                    if (me.backpluie.visible == false) {
+                        me.backpluie.setVisible(true);
+                        me.backbrume.setVisible(false);
+                        me.backneige.setVisible(false);
+                        me.background.setVisible(false);
+                        me.brume.setVisible(false);
+                        me.snowAnim.setVisible(false);
+                        me.rainAnim.setVisible(true);
+                    }
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.D: /**Inputs pour la neige*/
+                    if (me.backneige.visible == false) {
+                        me.backneige.setVisible(true);
+                        me.backbrume.setVisible(false);
+                        me.background.setVisible(false);
+                        me.backpluie.setVisible(false);
+                        me.brume.setVisible(false);
+                        me.snowAnim.setVisible(true);
+                        me.rainAnim.setVisible(false);
+                    }
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.F: /**Inputs pour la brume*/
+                    if (me.backbrume.visible == false) {
+                        me.backbrume.setVisible(true);
+                        me.background.setVisible(false);
+                        me.backneige.setVisible(false);
+                        me.backpluie.setVisible(false);
+                        me.brume.setVisible(true);
+                        me.snowAnim.setVisible(false);
+                        me.rainAnim.setVisible(false);
                     }
                     break;
 
