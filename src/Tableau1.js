@@ -36,6 +36,13 @@ class Tableau1 extends Phaser.Scene{
             this.load.image('butt'+q, 'assets/paps/butt'+q+'.png');
         }
 
+        /**Chargement des animaux*/
+        this.load.image('cerf', 'assets/animaux/cerf.png');
+        this.load.image('ours', 'assets/animaux/ours.png');
+        this.load.image('renard', 'assets/animaux/renard.png');
+        this.load.image('ecureuil', 'assets/animaux/ecureuil.png');
+        this.load.image('loup', 'assets/animaux/loup.png');
+
 
         /**Chargement des particules*/
         this.load.image('part', 'assets/yellow.png');
@@ -119,6 +126,28 @@ class Tableau1 extends Phaser.Scene{
         this.butt4=this.add.sprite(1200,100, 'butt4').setOrigin(0,0);
         this.butt4.setVisible(false);
         this.butt4.scale=0.2;
+
+        /**Création des sprites d'animaux'*/
+        this.cerf=this.add.sprite(650,250, 'cerf').setOrigin(0,0);
+        this.cerf.setVisible(false);
+        this.cerf.scale=0.6;
+
+        this.loup=this.add.sprite(680,450, 'loup').setOrigin(0,0);
+        this.loup.setVisible(false);
+        this.loup.scale=0.4;
+
+        this.ecureuil=this.add.sprite(780,680, 'ecureuil').setOrigin(0,0);
+        this.ecureuil.setVisible(false);
+        this.ecureuil.scale=0.05;
+
+        this.ours=this.add.sprite(650,430, 'ours').setOrigin(0,0);
+        this.ours.setVisible(false);
+        this.ours.scale=1;
+
+        this.renard=this.add.sprite(1000,450, 'renard').setOrigin(0,0);
+        this.renard.setVisible(false);
+        this.renard.scale=0.2;
+
 
         /**Création du sprite de brume*/
         this.brume=this.add.sprite(0,50, 'brume').setOrigin(0,0);
@@ -313,6 +342,73 @@ class Tableau1 extends Phaser.Scene{
                         me.brume.setVisible(true);
                         me.snowAnim.setVisible(false);
                         me.rainAnim.setVisible(false);
+                    }
+                    break;
+
+                /**Inputs pour l'affichage/ disparition des animaux (G-L)*/
+
+                case Phaser.Input.Keyboard.KeyCodes.G: /**Inputs pour le cerf*/
+                    if (me.cerf.visible == false) {
+                        me.cerf.setVisible(true);
+                        me.ours.setVisible(false);
+                        me.renard.setVisible(false);
+                        me.loup.setVisible(false);
+                        me.ecureuil.setVisible(false);
+                    }
+                    else  {
+                        me.cerf.setVisible(false)
+                    }
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.H: /**Inputs pour le renard*/
+                    if (me.renard.visible == false) {
+                        me.renard.setVisible(true);
+                        me.ours.setVisible(false);
+                        me.cerf.setVisible(false);
+                        me.loup.setVisible(false);
+                        me.ecureuil.setVisible(false);
+                    }
+                    else  {
+                        me.renard.setVisible(false)
+                    }
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.J: /**Inputs pour le loup*/
+                    if (me.loup.visible == false) {
+                        me.loup.setVisible(true);
+                        me.ours.setVisible(false);
+                        me.cerf.setVisible(false);
+                        me.renard.setVisible(false);
+                        me.ecureuil.setVisible(false);
+                    }
+                    else  {
+                        me.loup.setVisible(false)
+                    }
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.K: /**Inputs pour l'ours*/
+                    if (me.ours.visible == false) {
+                        me.ours.setVisible(true);
+                        me.renard.setVisible(false);
+                        me.cerf.setVisible(false);
+                        me.loup.setVisible(false);
+                        me.ecureuil.setVisible(false);
+                    }
+                    else  {
+                        me.ours.setVisible(false)
+                    }
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.L: /**Inputs pour l'ecureuil*/
+                    if (me.ecureuil.visible == false) {
+                        me.ecureuil.setVisible(true);
+                        me.ours.setVisible(false);
+                        me.cerf.setVisible(false);
+                        me.loup.setVisible(false);
+                        me.renard.setVisible(false);
+                    }
+                    else  {
+                        me.ecureuil.setVisible(false)
                     }
                     break;
 
