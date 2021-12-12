@@ -46,6 +46,10 @@ class Tableau1 extends Phaser.Scene{
 
         /**Chargement des particules*/
         this.load.image('part', 'assets/yellow.png');
+        this.load.image('part2', 'assets/white.png');
+
+        /**Chargement de la musique*/
+        this.load.audio('music','assets/nwn-silversalecompany.mp3');
 
     }
 
@@ -66,6 +70,7 @@ class Tableau1 extends Phaser.Scene{
         this.backpluie=this.add.sprite(0,0, 'bgp').setOrigin(0,0);
         this.backpluie.scale=0.7;
         this.backpluie.setVisible(false);
+
 
         /**Création des sprites de champignons en les rendant invisibles*/
         this.mush1=this.add.sprite(800,500, 'mush1').setOrigin(0,0);
@@ -189,11 +194,11 @@ class Tableau1 extends Phaser.Scene{
         this.snowAnim.setVisible(false);
 
 
-        /**Création des particules*/
+        /**Création des particules jaunes*/
         this.part = this.add.particles('part');
-        this.part.setVisible(false)
+        this.part.setVisible(false);
 
-        /**Création de l'émetteur*/
+        /**Création de l'émetteur jaune*/
         this.emitter = this.part.createEmitter({
             speed: 100,
             lifespan: 20000,
@@ -201,9 +206,25 @@ class Tableau1 extends Phaser.Scene{
             blendMode: 'ADD'
 
         });
-        this.emitter.start(0,0)
+        this.emitter.start(0,0);
 
+        /**Création des particules blanches*/
+        this.part2 = this.add.particles('part2');
+        this.part2.setVisible(false);
 
+        /**Création de l'émetteur blanc*/
+        this.emitter2 = this.part2.createEmitter({
+            speed: 100,
+            scale: 0.1,
+            lifespan: 20000,
+            blendMode: 'ADD'
+        });
+        this.emitter2.setPosition(750,800);
+        this.emitter2.start();
+
+        /**paramètres de la musique*/
+        this.music=this.sound.add('music',{loop: false});
+        this.music.volume=0.6;
 
         /**Initialisation de la fonction 'initKeyboard'*/
         this.initKeyboard();
@@ -446,7 +467,23 @@ class Tableau1 extends Phaser.Scene{
                     }
                     break;
 
-                /**Inputs pour l'affichage des particules au premier plan*/
+                /**Inputs pour l'affichage des particules blanches au premier plan (B-N)*/
+
+                case Phaser.Input.Keyboard.KeyCodes.B:
+                    if (me.part2.visible == false) {
+                        me.part2.setVisible(true);
+                        me.music.play();
+                    }
+                    break;
+
+                case Phaser.Input.Keyboard.KeyCodes.N:
+                    if (me.part2.visible == true) {
+                        me.part2.setVisible(false);
+                        me.music.stop();
+                    }
+                    break;
+
+                /**Inputs pour l'affichage des particules jaunes au premier plan*/
                 case Phaser.Input.Keyboard.KeyCodes.M:
                     me.part.setVisible(true)
                     break;
