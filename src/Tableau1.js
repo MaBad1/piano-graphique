@@ -213,13 +213,16 @@ class Tableau1 extends Phaser.Scene{
         this.part2.setVisible(false);
 
         /**Création de l'émetteur blanc*/
+        var emitZone = new Phaser.Geom.Rectangle(0, 0, 1422, 800);
+
         this.emitter2 = this.part2.createEmitter({
-            speed: 100,
-            scale: 0.1,
+            speed: { min: -20, max: 20 },
+            scale: { min: 0.1, max: 0.2 },
+            alpha: { start: 1, end: 0 },
             lifespan: 20000,
+            emitZone: { source: emitZone },
             blendMode: 'ADD'
         });
-        this.emitter2.setPosition(750,800);
         this.emitter2.start();
 
         /**paramètres de la musique*/
